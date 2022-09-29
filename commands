@@ -1,3 +1,4 @@
 kubectl apply -f deployment.yaml
 docker build -t image_name .
 docker run -p port:port imagename
+docker rmi -f $(docker images -aq)
