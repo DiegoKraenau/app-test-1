@@ -25,7 +25,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "npm run commit:patch && git add . && git commit -m 'Refrshing version'"
+      "pre-push": "npm run commit:patch && git add . && git commit -m 'Refreshing version'"
     }
   }
 }
