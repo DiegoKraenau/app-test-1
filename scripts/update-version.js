@@ -26,7 +26,7 @@ const question = [{
   (async () => {
   
     prompt.start();
-    const response = await prompts(question);
+    const response = await prompt(question);
   
     if (!response.version) {
       console.log(chalk.red.bold('No se seleccionó ninguna opción'));
