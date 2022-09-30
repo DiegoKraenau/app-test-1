@@ -70,14 +70,14 @@ const question = [{
 
 function validateWorkspace() {
   const workSpace = spawnSync('git', ['status', '--porcelain']);
-  if (workSpace.error) {
-    console.log(chalk.red.bold('Ocurrió un error verificando el espacio de trabajo'));
-    process.exit(1);
-  }
-  if (workSpace.stdout.toString('utf8').trim()) {
-    console.log(chalk.red.bold('Tiene archivos en su espacio de trabajo de GIT'));
-    process.exit(1);
-  }
+//   if (workSpace.error) {
+//     console.log(chalk.red.bold('Ocurrió un error verificando el espacio de trabajo'));
+//     process.exit(1);
+//   }
+//   if (workSpace.stdout.toString('utf8').trim()) {
+//     console.log(chalk.red.bold('Tiene archivos en su espacio de trabajo de GIT'));
+//     process.exit(1);
+//   }
 }
 
 // function writePackageJson() {
