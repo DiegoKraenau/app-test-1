@@ -39,27 +39,27 @@ jobs:
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.APP_NAME }} --all-tags
     needs: build
 
-    deploy-to-kubernetes:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Checkout
-          uses: actions/checkout@v3
-        - id: 'auth'
-          name: 'Authenticate to Google Cloud'
-          uses: 'google-github-actions/auth@v0'
-          with:
-            credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
-        - name: Set up GKE credentials
-          uses: google-github-actions/get-gke-credentials@v0
-          with:
-            cluster_name: ${{ secrets.GKE_CLUSTER }}
-            location: ${{ secrets.GKE_ZONE }}
-        - name: Deploy
-          run:  |
-            git clone ${{ secrets.CONFIG_SERVER_REPO }} target
-            cd target
-            kubectl apply -f ${{ secrest.APP_NAME}}.deployment.yaml
-            kubect apply -f ingress.yaml
-            kubectl get pods
-      needs: deploy-to-docker
+  deploy-to-kubernetes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v0'
+        with:
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+      - name: Set up GKE credentials
+        uses: google-github-actions/get-gke-credentials@v0
+        with:
+          cluster_name: ${{ secrets.GKE_CLUSTER }}
+          location: ${{ secrets.GKE_ZONE }}
+      - name: Deploy
+        run:  |
+          git clone ${{ secrets.CONFIG_SERVER_REPO }} target
+          cd target
+          kubectl apply -f ${{ secrest.APP_NAME}}.deployment.yaml
+          kubect apply -f ingress.yaml
+          kubectl get pods
+    needs: deploy-to-docker
             
