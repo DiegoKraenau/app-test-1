@@ -31,10 +31,10 @@ jobs:
         uses: Saionaro/extract-package-version@v1.0.6
       - name: Get app version and build image
         env:
-          DIEGO_VAR: ${{ steps.extract_version.outputs.version }}
+          APP_VER: ${{ steps.extract_version.outputs.version }}
         run:  |
-          echo $DIEGO_VAR
-          docker build -t diegokraenau/app-test-1:$DIEGO_VAR -t diegokraenau/app-test-1:latest .
-      - run: docker image ls
-      - run: docker push diegokraenau/app-test-1 --all-tags
+          echo $APP_VER
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.APP_NAME }}:$APP_VER -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.APP_NAME }}:latest .
+          docker image ls
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.APP_NAME }} --all-tags
     needs: build
