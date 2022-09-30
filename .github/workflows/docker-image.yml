@@ -26,6 +26,5 @@ jobs:
       - run: echo ${{ steps.extract_version.outputs.version }}
       - run: docker build -t diegokraenau/app-test-1:$(date +%s) .
       - run: docker image ls
-      - name: Push image to docker hub
       - run: docker push diegokraenau/app-test-1:$(date +%s)
     needs: build
