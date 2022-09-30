@@ -7,5 +7,5 @@ const port = 3000
 app.use('/app-test-1', routes)
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port} in app-test-1 v3.0, hola desde el ci cd v5`);
+  console.log(`Example app listening on port ${port} in app-test-1 v3.0, hola desde el ci cd v6`);
 })
