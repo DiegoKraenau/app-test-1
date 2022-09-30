@@ -29,7 +29,7 @@ jobs:
           DIEGO_VAR: ${{ steps.extract_version.outputs.version }}
         run:  |
           echo $DIEGO_VAR
-      - run: docker build -t diegokraenau/app-test-1:"${{DIEGO_VAR}}" -t diegokraenau/app-test-1:latest .
+      - run: docker build -t diegokraenau/app-test-1:$(DIEGO_VAR) -t diegokraenau/app-test-1:latest .
       - run: docker image ls
       - run: docker push diegokraenau/app-test-1 --all-tags
     needs: build
