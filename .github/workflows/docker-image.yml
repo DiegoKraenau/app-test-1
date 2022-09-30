@@ -26,8 +26,8 @@ jobs:
         uses: Saionaro/extract-package-version@v1.0.6
       - name: Print version
         run:  |
-          export APP_VERSION=${{ steps.extract_version.outputs.version }}
-          echo $APP_VERSION
+          echo "GITHUB_SHA_SHORT=$${{ steps.extract_version.outputs.version }}" >> $GITHUB_ENV
+          echo $GITHUB_SHA_SHORT
       - run: docker build -t diegokraenau/app-test-1:"$(APP_VERSION)" -t diegokraenau/app-test-1:latest .
       - run: docker image ls
       - run: docker push diegokraenau/app-test-1 --all-tags
