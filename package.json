@@ -1,13 +1,13 @@
 {
   "name": "app-test-1",
-  "version": "1.0.9",
+  "version": "1.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "commit:patch": "npm version patch --no-git-tag-version --force",
     "commit:minor": "npm version minor --no-git-tag-version --force",
-    "commit:major": "npm version major --no-git-tag-version --force",
+    "commit:major": "npm version major --no-git-tag-version --force"
   },
   "author": "",
   "license": "ISC",
@@ -18,7 +18,7 @@
   },
   "husky": {
     "hooks": {
-      "prepare-commit-msg": "node scripts/validatebranch.js && node scripts/commitmsg.js"
+      "prepare-commit-msg": "npm run commit:patch"
     }
   }
 }
