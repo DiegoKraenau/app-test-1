@@ -39,7 +39,7 @@ on:
 #           docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.APP_NAME }} --all-tags
 #     needs: build
 
-  deploy-to-k8:
+  deploy-to-kubernetes:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
