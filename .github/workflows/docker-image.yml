@@ -26,8 +26,8 @@ jobs:
         uses: Saionaro/extract-package-version@v1.0.6
       - name: Print version
         run:  |
-          command | tee ${{ steps.extract_version.outputs.version }}
-          echo ${{command}}
+          export DIEGO=${{ steps.extract_version.outputs.version }}
+          echo $DIEGO
       - run: docker build -t diegokraenau/app-test-1:$(date +%s) .
       - run: docker image ls
       - run: docker push diegokraenau/app-test-1:$(date +%s)
