@@ -60,5 +60,7 @@ jobs:
             location: ${{ env.GKE_ZONE }}
         - name: Deploy
           run:  |
-            kubectl get all
+            git clone ${{ secrets.CONFIG_SERVER_REPO }} target
+            cd target
+            ls
             
