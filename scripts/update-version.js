@@ -1,4 +1,4 @@
-const prompt = require("prompt-async");
+const prompts = require('prompts');
 const fs = require('fs');
 const {
   spawnSync
@@ -25,8 +25,7 @@ const question = [{
   
   (async () => {
   
-    prompt.start();
-    const response = await prompt(question);
+    const response = await prompts(question);
   
     if (!response.version) {
       console.log(chalk.red.bold('No se seleccionó ninguna opción'));
