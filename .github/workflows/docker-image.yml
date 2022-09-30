@@ -58,6 +58,7 @@ jobs:
         run:  |
           git clone ${{ secrets.CONFIG_SERVER_REPO }} target
           cd target
+          ls
           kubectl apply -f ${{ secrets.APP_NAME}}.deployment.yaml
           kubect apply -f ingress.yaml
           kubectl get pods
