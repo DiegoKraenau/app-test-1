@@ -14,7 +14,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - run: npm ci
+      - run: npm i
 
 
   deploy-to-docker:
@@ -24,3 +24,4 @@ jobs:
     - run: docker build -t diegokraenau/app-test-1:$(date +%s) .
     - run: docker image ls
     - run: docker push diegokraenau/app-test-1:$(date +%s)
+    needs: build
