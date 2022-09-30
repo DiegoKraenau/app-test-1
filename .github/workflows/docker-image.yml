@@ -59,7 +59,7 @@ jobs:
           git clone ${{ secrets.CONFIG_SERVER_REPO }} target
           cd target
           ls
-          kubectl apply -f ${{ secrets.APP_NAME}}-deployment.yaml
+          kubectl delete -f ${{ secrets.APP_NAME}}-deployment.yaml && kubectl apply -f ${{ secrets.APP_NAME}}-deployment.yaml
           kubectl apply -f ${{ secrets.APP_NAME}}-ingress.yaml
           kubectl get pods
     needs: deploy-to-docker
