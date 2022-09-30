@@ -60,7 +60,7 @@ jobs:
           cd target
           ls
           kubectl apply -f ${{ secrets.APP_NAME}}-deployment.yaml
-          kubectl apply -f ingress.yaml
+          kubectl apply -f ${{ secrets.APP_NAME}}-ingress.yaml
           kubectl get pods
     needs: deploy-to-docker
             
