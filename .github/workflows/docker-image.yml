@@ -28,7 +28,7 @@ jobs:
         run:  |
           export APP_VERSION=${{ steps.extract_version.outputs.version }}
           echo $APP_VERSION
-      - run: docker build -t diegokraenau/app-test-1:"$APP_VERSION" -t diegokraenau/app-test-1:latest .
+      - run: docker build -t diegokraenau/app-test-1:"$(APP_VERSION)" -t diegokraenau/app-test-1:latest .
       - run: docker image ls
       - run: docker push diegokraenau/app-test-1 --all-tags
     needs: build
