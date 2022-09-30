@@ -31,6 +31,8 @@ const question = [{
       console.log(chalk.red.bold('No se seleccionó ninguna opción'));
       process.exit(1);
     }
+
+    console.log('response', response);
   
   
   })();
