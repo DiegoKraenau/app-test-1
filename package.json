@@ -24,7 +24,7 @@
   },
   "husky": {
     "hooks": {
-      "prepare-commit-msg": "node scripts/update-version.js && node scripts/commitmsg.js"
+      "prepare-commit-msg": "node scripts/update-version.js"
     }
   }
 }

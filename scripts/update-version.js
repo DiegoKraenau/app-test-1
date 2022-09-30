@@ -55,6 +55,7 @@ const question = [{
 (async () => {
 
   const response = await prompts(question);
+  console.log('HOLA', response);
 
   if (!response.version) {
     console.log(chalk.red.bold('No se seleccionó ninguna opción'));
