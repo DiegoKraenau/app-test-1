@@ -20,8 +20,18 @@ jobs:
   deploy-to-docker:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - run: docker build -t diegokraenau/app-test-1:$(date +%s) .
-    - run: docker image ls
-    - run: docker push diegokraenau/app-test-1:$(date +%s)
+      - name: Checkout code
+          uses: actions/checkout@master
+      - name: Extract version
+        id: extract_version
+        uses: Saionaro/extract-package-version@v1.0.6
+        # From now you can access the version
+      - name: Print version
+        run: echo ${{ steps.extract_version.outputs.version }}
+      - uses: actions/checkout@v3
+      - name: Build docker version
+      - run: docker build -t diegokraenau/app-test-1:$(date +%s) .
+      - run: docker image ls
+      - name: Push image to docker hub
+      - run: docker push diegokraenau/app-test-1:$(date +%s)
     needs: build
