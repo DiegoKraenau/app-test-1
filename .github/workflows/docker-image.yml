@@ -1,4 +1,4 @@
-name: Build and deploy to Docker
+name: CICD GC @Author Diego Kraenau
 
 on:
   push:
@@ -6,42 +6,38 @@ on:
   pull_request:
     branches: [ "master" ]
 
-env:
-  GKE_CLUSTER: app-cluster-diego
-  GKE_ZONE: us-central1-c
-
 jobs:
-#   build:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@v3
-#       - uses: actions/setup-node@v3
-#         with:
-#           node-version: 16
-#       - run: npm i
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - run: npm i
 
 
-#   deploy-to-docker:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Login to Docker Hub
-#         uses: docker/login-action@v2
-#         with:
-#           username: ${{ secrets.DOCKERHUB_USERNAME }}
-#           password: ${{ secrets.DOCKERHUB_TOKEN }}
-#       - uses: actions/checkout@master
-#       - name: Extract version
-#         id: extract_version
-#         uses: Saionaro/extract-package-version@v1.0.6
-#       - name: Get app version and build image
-#         env:
-#           APP_VER: ${{ steps.extract_version.outputs.version }}
-#         run:  |
-#           echo $APP_VER
-#           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.APP_NAME }}:$APP_VER -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.APP_NAME }}:latest .
-#           docker image ls
-#           docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.APP_NAME }} --all-tags
-#     needs: build
+  deploy-to-docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - uses: actions/checkout@master
+      - name: Extract version
+        id: extract_version
+        uses: Saionaro/extract-package-version@v1.0.6
+      - name: Get app version and build image
+        env:
+          APP_VER: ${{ steps.extract_version.outputs.version }}
+        run:  |
+          echo $APP_VER
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.APP_NAME }}:$APP_VER -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.APP_NAME }}:latest .
+          docker image ls
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.APP_NAME }} --all-tags
+    needs: build
 
     deploy-to-kubernetes:
       runs-on: ubuntu-latest
@@ -56,11 +52,14 @@ jobs:
         - name: Set up GKE credentials
           uses: google-github-actions/get-gke-credentials@v0
           with:
-            cluster_name: ${{ env.GKE_CLUSTER }}
-            location: ${{ env.GKE_ZONE }}
+            cluster_name: ${{ secrets.GKE_CLUSTER }}
+            location: ${{ secrets.GKE_ZONE }}
         - name: Deploy
           run:  |
             git clone ${{ secrets.CONFIG_SERVER_REPO }} target
             cd target
-            ls
+            kubectl apply -f ${{ secrest.APP_NAME}}.deployment.yaml
+            kubect apply -f ingress.yaml
+            kubectl get pods
+    needs: deploy-to-docker
             
